@@ -92,7 +92,7 @@ export default function ChatBot() {
     setIsTyping(true);
     await new Promise(resolve => setTimeout(resolve, 1000));
     setIsTyping(false);
-    return "Here are the best agents for your needs:";
+    return "Further Details needed";
   };
 
   const handleSendMessage = async () => {
@@ -188,7 +188,7 @@ export default function ChatBot() {
               </div>
             ))}
 
-            {suggestions.length > 0 && (
+            {suggestions.length > 0 && taskDescription == '' && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-2 max-w-4xl w-full">
                   <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">
