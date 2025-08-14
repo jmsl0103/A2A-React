@@ -94,7 +94,7 @@ const WorkPage: React.FC = () => {
                 size="large" 
                 style={{ 
                   width: '100%', 
-                  background: 'linear-gradient(45deg, #8b5cf6, #6366f1)',
+                  background: 'linear-gradient(45deg, #212529, #6366f1)',
                   border: 'none',
                   borderRadius: '8px'
                 }}

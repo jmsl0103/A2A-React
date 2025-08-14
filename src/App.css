@@ -1,5 +1,5 @@
 .gradient-bg {
-  background: linear-gradient(135deg, #6366f1 0%, #8b5cf6 50%, #3b82f6 100%);
+  background: #212529;
   min-height: 100vh;
 }
 
@@ -30,13 +30,12 @@
 }
 
 .gradient-button {
-  background: linear-gradient(45deg, #8b5cf6, #6366f1);
+  background: #0067b8;
   border: none;
   height: 50px;
   border-radius: 25px;
   color: white;
   font-weight: 600;
-  transition: all 0.3s ease;
 }
 
 .gradient-button:hover {
@@ -64,7 +63,7 @@
 .navbar-brand {
   font-size: 1.5rem;
   font-weight: 700;
-  color: #8b5cf6 !important;
+  color: #212529 !important;
   text-decoration: none;
 }
 
@@ -77,11 +76,11 @@
 
 .navbar-nav .nav-link:hover,
 .navbar-nav .nav-link.active {
-  color: #8b5cf6 !important;
+  color: #212529 !important;
 }
 
 .submit-agent-btn {
-  background: linear-gradient(45deg, #8b5cf6, #6366f1);
+  background: #0067b8;
   border: none;
   color: white;
   border-radius: 20px;

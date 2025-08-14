@@ -1,12 +1,21 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Button, Input, Row, Col } from 'antd';
 import { SearchOutlined, UploadOutlined, ArrowRightOutlined } from '@ant-design/icons';
 import { useNavigate } from 'react-router-dom';
+import HireBlock from '../components/Layout/HireBlock';
 
 const { TextArea } = Input;
 
 const HomePage: React.FC = () => {
   const navigate = useNavigate();
+  const [taskDescription, setTaskDescription] = useState("");
+
+  const handleNavigate = () => {
+    if(taskDescription) {
+      const randomId = Math.random().toString(36).substring(2, 10);
+      navigate(`/chat/${randomId}`, { state: { taskDescription } });
+    }
+  };
 
   return (
     <div className="gradient-bg">
@@ -36,6 +45,7 @@ const HomePage: React.FC = () => {
                     size="large" 
                     className="outline-button w-100"
                     icon={<UploadOutlined />}
+                    onClick={() => navigate('/submit')}
                   >
                     Upload Agents
                   </Button>
@@ -48,6 +58,8 @@ const HomePage: React.FC = () => {
                     <TextArea
                       placeholder="Describe what task you want to complete or a workflow you have"
                       rows={3}
+                      value={taskDescription}
+                      onChange={(e) => setTaskDescription(e.target.value)}
                       style={{
                         background: 'rgba(255, 255, 255, 0.9)',
                         border: 'none',
@@ -75,12 +87,13 @@ const HomePage: React.FC = () => {
                         size="large"
                         icon={<ArrowRightOutlined />}
                         className="gradient-button"
-                        onClick={() => navigate('/submit')}
+                        onClick={handleNavigate}
                       />
                     </div>
                   </Col>
                 </Row>
               </div>
+              <HireBlock />
             </Col>
           </Row>
         </div>

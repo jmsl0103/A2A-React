@@ -9,7 +9,7 @@ const AboutPage: React.FC = () => {
     {
       title: 'Active Agents',
       value: 2847,
-      icon: <RocketOutlined style={{ color: '#8b5cf6' }} />
+      icon: <RocketOutlined style={{ color: '#212529' }} />
     },
     {
       title: 'Community Members',
@@ -89,7 +89,7 @@ const AboutPage: React.FC = () => {
             <Card 
               title="Our Mission" 
               style={{ height: '100%', borderRadius: '12px' }}
-              headStyle={{ background: 'linear-gradient(45deg, #8b5cf6, #6366f1)', color: 'white' }}
+              headStyle={{ background: 'linear-gradient(45deg, #212529, #6366f1)', color: 'white' }}
             >
               <Paragraph>
                 To democratize AI by making intelligent agents accessible, shareable, and easy to deploy. 
@@ -154,7 +154,7 @@ const AboutPage: React.FC = () => {
           <Row gutter={[24, 24]}>
             <Col xs={24} md={8}>
               <div style={{ textAlign: 'center', padding: '24px' }}>
-                <RocketOutlined style={{ fontSize: '48px', color: '#8b5cf6', marginBottom: '16px' }} />
+                <RocketOutlined style={{ fontSize: '48px', color: '#212529', marginBottom: '16px' }} />
                 <Title level={4}>Innovation</Title>
                 <Text>We push the boundaries of what's possible with AI technology</Text>
               </div>
