@@ -7,7 +7,7 @@ const SDKDetails: React.FC = () => {
     const location = useLocation();
     const { agent } = location.state || {};
   return (
-    <div className="min-h-screen bg-gray-50 p-6">
+    <div className="min-h-auto bg-gray-50 p-6">
       <div className="max-w-6xl mx-auto">
         {/* Back to Agents */}
         <button onClick={() => window.history.back()} className="flex items-center gap-2 mb-6 text-gray-600 hover:text-white-800 transition-colors">

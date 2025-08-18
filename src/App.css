@@ -1,6 +1,6 @@
 .gradient-bg {
   background: #212529;
-  min-height: 100vh;
+  min-height: auto;
 }
 
 .hero-section {

@@ -128,14 +128,16 @@ export default function ChatBot() {
   };
 
   const handleLaunchAgent = (agent: Agent) => {
-    navigate(`/chat/agent/${agent.id}`);
+    navigate(`/chat/agent/${agent.id}`, { state: { taskDescription : '' } });
 };
 
   return (
-    <div className="min-h-screen bg-gray-50 p-4">
+
+    <div className="min-h-auto bg-gray-50 p-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-800 mb-2">AI Agent Matcher</h1>
+          <span>{taskDescription ? taskDescription : 'empty'}</span>
+          <h1 className="text-3xl font-bold text-gray-800 mb-2">Smart Agent Recommender</h1>
           <p className="text-gray-600">Find the perfect AI agent for your specific needs</p>
         </div>
 
@@ -187,8 +189,7 @@ export default function ChatBot() {
                 </div>
               </div>
             ))}
-
-            {suggestions.length > 0 && taskDescription == '' && (
+            {suggestions.length > 0 && (
               <div className="flex justify-start">
                 <div className="flex items-start space-x-2 max-w-4xl w-full">
                   <div className="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0">

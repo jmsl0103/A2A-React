@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { ConfigProvider } from 'antd';
 import MainLayout from './components/Layout/MainLayout';
 import HomePage from './pages/HomePage';
@@ -21,11 +21,9 @@ const theme = {
     colorBgBase: '#ffffff',
   },
 };
-
-function App() {
+function AppRoutes() {
+  const location = useLocation();
   return (
-    <ConfigProvider theme={theme}>
-      <Router>
         <MainLayout>
           <Routes>
             <Route path="/" element={<HomePage />} />
@@ -37,9 +35,16 @@ function App() {
             <Route path="/about" element={<AboutPage />} />
             <Route path="/agent/:id" element={<AgentDetails />} />
             <Route path="/chat/:id" element={<ChatBot />} />
-            <Route path="/chat/agent/:agentId" element={<ChatBot />} />
+            <Route path="/chat/agent/:agentId" element={<ChatBot key={location.key}/>} />
           </Routes>
         </MainLayout>
+  )
+}
+function App() {
+  return (
+    <ConfigProvider theme={theme}>
+      <Router>
+        <AppRoutes />
       </Router>
     </ConfigProvider>
   );
