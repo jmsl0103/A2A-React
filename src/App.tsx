@@ -10,6 +10,7 @@ import AgentsPage from './pages/AgentsPage';
 import WorkflowsPage from './pages/WorkflowsPage';
 import AboutPage from './pages/AboutPage';
 import AgentDetails from './pages/AgentDetails';
+import Canvas from './components/Layout/Canvas';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'antd/dist/reset.css';
 import './App.css';

@@ -58,7 +58,7 @@ const AboutPage: React.FC = () => {
         {/* Hero Section */}
         <div className="text-center mb-5">
           <Title level={1} style={{ color: '#1e293b', marginBottom: '16px' }}>
-            About A2A Catalog
+            About OI Catalog
           </Title>
           <Paragraph style={{ fontSize: '18px', color: '#64748b', maxWidth: '600px', margin: '0 auto' }}>
             We're building the world's largest marketplace for AI agents, connecting developers, 

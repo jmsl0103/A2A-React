@@ -74,7 +74,7 @@ const SDKDetails: React.FC = () => {
               </div>
 
               {/* Skills & Capabilities */}
-              <div>
+              <div className='mb-6'>
                 <h3 className="text-sm font-semibold text-white-900 mb-3">Skills & Capabilities</h3>
                 <div className="flex flex-wrap gap-2">
                   {[...new Set<string>(agent.skills.flatMap((skill: { name: string }) => skill.name))].map((skill: string, index) => (
@@ -85,6 +85,26 @@ const SDKDetails: React.FC = () => {
                           {skill}
                         </span>
                       ))}
+                </div>
+              </div>
+              <div className='mb-6'>
+                <h3 className="text-sm font-semibold text-white-900 mb-3">Mode of Input</h3>
+                <div className="flex flex-wrap gap-2">
+                  {agent.default_input_modes.map((mode: string, index: number) => (
+                    <span key={index} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm mr-4">
+                      {mode}
+                    </span>
+                  ))}
+                </div>
+                </div>
+                <div>
+                <h3 className="text-sm font-semibold text-white-900 mb-3">Mode of Output</h3>
+                <div className="flex flex-wrap gap-2">
+                  {agent.default_output_modes.map((mode: string, index: number) => (
+                    <span key={index} className="px-3 py-1 bg-purple-100 text-purple-700 rounded-full text-sm mr-4">
+                      {mode}
+                    </span>
+                  ))}
                 </div>
               </div>
             </div>

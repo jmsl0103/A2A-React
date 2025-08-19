@@ -136,7 +136,6 @@ export default function ChatBot() {
     <div className="min-h-auto bg-gray-50 p-4">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-8">
-          <span>{taskDescription ? taskDescription : 'empty'}</span>
           <h1 className="text-3xl font-bold text-gray-800 mb-2">Smart Agent Recommender</h1>
           <p className="text-gray-600">Find the perfect AI agent for your specific needs</p>
         </div>

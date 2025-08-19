@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Search, Filter, Grid, List, Plus, User, Heart, Star, GitFork, ExternalLink, CheckCircle, ChevronDown, Grid3X3 } from 'lucide-react';
-import { useNavigate } from 'react-router-dom';
+import { data, useNavigate } from 'react-router-dom';
 
 const AgentsPage: React.FC = () => {
   const navigate = useNavigate();
@@ -8,7 +8,8 @@ const AgentsPage: React.FC = () => {
   const [filteredAgents, setFilteredAgents] = useState<any[]>([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [sortBy, setSortBy] = useState('Most Popular');
-
+  const [isFocused, setIsFocused] = useState(false);
+  
   const agentsData = {
     "agents": [
       {
@@ -361,26 +362,45 @@ const AgentsPage: React.FC = () => {
 
   const categories = ['Accessibility', 'Audio Processing', 'Business Intelligence', 'Communication', 'Content Generation', 'Creative', 'Customer Service', 'Data & Analytics', 'Development', 'Environment', 'Finance', 'Image Processing', 'Language', 'Marketing', 'Other', 'Productivity', 'Research', 'Social Media'];
   useEffect(() => {
-    if (!selectedCategories.length) {
+    if (!selectedCategories.length && searchQuery.length < 4) {
       setFilteredAgents(agentsData.agents);
     }
-    else {
+    else if (selectedCategories.length || searchQuery.length > 3) {
+      const keyword = searchQuery.toLowerCase();
       const filteredAgents = agentsData.agents.filter(agent => {
-        return selectedCategories.some(category => agent.skills.some(skill => skill.tags.includes(category.toLowerCase())));
+
+        return selectedCategories.length ? selectedCategories.some(category => agent.skills.some(skill => skill.tags.includes(category.toLowerCase()))) : true;
+      }).filter(agent => {
+        // check name + description
+        if (keyword.length < 4) {
+          return true;
+        }
+        const inNameOrDesc = agent.name.toLowerCase().includes(keyword) ||
+          agent.description.toLowerCase().includes(keyword);
+
+        // check inside skills (name, description, tags)
+        const inSkills = agent.skills.some((skill: any) =>
+          skill.name.toLowerCase().includes(keyword) ||
+          skill.description.toLowerCase().includes(keyword) ||
+          skill.tags.some((tag: string) => tag.toLowerCase().includes(keyword))
+        );
+
+        return inNameOrDesc || inSkills;
       });
       setFilteredAgents(filteredAgents);
     }
-  }, [selectedCategories]);
+  }, [selectedCategories, searchQuery]);
+
   return (
     <div className="min-h-auto bg-gray-50">
       <div className="max-w-7xl mx-auto px-6 py-12" style={{ backgroundColor: '#212529' }}>
         {/* Header Section */}
         <div className="mb-12">
           <h1 className="text-4xl font-bold text-white mb-6">
-            A2A Agent Catalog
+            OI Agent Catalog
           </h1>
           <p className="text-gray-300 text-lg leading-relaxed max-w-5xl">
-            Discover and integrate A2A-compliant AI agents for seamless interoperability. Browse the most comprehensive collection of AI agents supporting the Agent-to-Agent protocol from AutoGen, LangGraph, CrewAI, LlamaIndex, Semantic Kernel, and more frameworks.
+            Discover and integrate OI-compliant AI agents for seamless interoperability. Browse the most comprehensive collection of AI agents supporting the Agent-to-Agent protocol from AutoGen, LangGraph, CrewAI, LlamaIndex, Semantic Kernel, and more frameworks.
           </p>
         </div>
 
@@ -394,6 +414,8 @@ const AgentsPage: React.FC = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
+                onFocus={() => setIsFocused(true)}
+                onBlur={() => setIsFocused(false)}
                 placeholder="Search agents, skills, or descriptions..."
                 className="w-full bg-white/10 border border-white/20 rounded-xl pl-12 pr-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-300"
               />
@@ -416,6 +438,11 @@ const AgentsPage: React.FC = () => {
               </div>
             </div>
           </div>
+          {isFocused &&searchQuery.length < 4 && (
+            <div className="flex items-center gap-3 mt-2">
+              <span style={{ color: 'red' }}>Please enter at least 4 characters to search</span>
+            </div>
+          )}
         </div>
       </div>
       <div className="min-h-auto bg-gray-50">
