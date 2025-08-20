@@ -8,7 +8,6 @@ const TopNavbar: React.FC = () => {
   const location = useLocation();
 
   const menuItems = [
-    { key: '/work', label: 'Work' },
     { key: '/tools', label: 'Tools' },
     { key: '/agents', label: 'Agents' },
     { key: '/workflows', label: 'Workflows' },
@@ -23,10 +22,9 @@ const TopNavbar: React.FC = () => {
           onClick={() => navigate('/')}
           style={{ textDecoration: 'none' }}
         >
-          A2A Catalog
+          OI Starship
         </button>
-        
-        <div className="collapse navbar-collapse" id="navbarNav">
+        <div className="navbar-collapse" id="navbarNav">
           <ul className="navbar-nav me-auto">
             {menuItems.map((item) => (
               <li key={item.key} className="nav-item">

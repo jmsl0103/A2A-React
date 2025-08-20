@@ -82,7 +82,7 @@ const WorkflowsPage: React.FC = () => {
                   <Col xs={24} lg={16}>
                     <div className="d-flex align-items-start mb-3">
                       <div className="me-3">
-                        <BranchesOutlined style={{ fontSize: '24px', color: '#8b5cf6' }} />
+                        <BranchesOutlined style={{ fontSize: '24px', color: '#212529' }} />
                       </div>
                       <div style={{ flex: 1 }}>
                         <div className="d-flex justify-content-between align-items-start mb-2">
@@ -112,7 +112,7 @@ const WorkflowsPage: React.FC = () => {
                             percent={workflow.progress} 
                             size="small" 
                             style={{ flex: 1, maxWidth: '200px' }}
-                            strokeColor="#8b5cf6"
+                            strokeColor="#212529"
                           />
                         </div>
                         <Text type="secondary" style={{ fontSize: '12px' }}>
@@ -143,7 +143,7 @@ const WorkflowsPage: React.FC = () => {
                         type="primary" 
                         size="small"
                         style={{ 
-                          background: workflow.status === 'Running' ? '#ef4444' : '#8b5cf6',
+                          background: workflow.status === 'Running' ? '#ef4444' : '#212529',
                           border: 'none',
                           borderRadius: '6px'
                         }}

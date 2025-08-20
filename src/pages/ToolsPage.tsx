@@ -67,14 +67,14 @@ const ToolsPage: React.FC = () => {
                   <Button type="link" icon={<LinkOutlined />}>
                     View Details
                   </Button>,
-                  <Button type="primary" style={{ background: 'linear-gradient(45deg, #8b5cf6, #6366f1)', border: 'none' }}>
+                  <Button type="primary" style={{ background: 'linear-gradient(45deg, #212529, #6366f1)', border: 'none' }}>
                     Install
                   </Button>
                 ]}
               >
                 <div className="d-flex align-items-start mb-3">
                   <div className="me-3">
-                    <ToolOutlined style={{ fontSize: '24px', color: '#8b5cf6' }} />
+                    <ToolOutlined style={{ fontSize: '24px', color: '#212529' }} />
                   </div>
                   <div style={{ flex: 1 }}>
                     <Title level={4} style={{ margin: 0, marginBottom: '8px' }}>

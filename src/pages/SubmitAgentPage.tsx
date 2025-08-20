@@ -8,13 +8,10 @@ import {
   Row, 
   Col, 
   Typography, 
-  Space,
   Card,
-  Upload,
-  message
+  message,
+  Radio
 } from 'antd';
-import { UploadOutlined, InfoCircleOutlined } from '@ant-design/icons';
-import type { UploadProps } from 'antd';
 
 const { Title, Text } = Typography;
 const { TextArea } = Input;
@@ -23,37 +20,51 @@ const { Option } = Select;
 const SubmitAgentPage: React.FC = () => {
   const [form] = Form.useForm();
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
+  const [skills, setSkills] = useState<string[]>([]);
 
   const categories = [
-    { value: 'logic-reasoning', label: 'Logic & Reasoning' },
-    { value: 'creative-generation', label: 'Creative Generation' },
-    { value: 'documentation', label: 'Documentation' },
-    { value: 'content-writing', label: 'Content Writing' },
-    { value: 'task-automation', label: 'Task Automation' },
-    { value: 'data-analysis', label: 'Data Analysis' },
-    { value: 'research', label: 'Research' },
-    { value: 'translation', label: 'Translation' },
-    { value: 'coding', label: 'Coding' },
-    { value: 'image-processing', label: 'Image Processing' },
+    { value: 'accessibility', label: 'Accessibility' },
+    { value: 'audioProcessing', label: 'Audio Processing' },
+    { value: 'businessIntelligence', label: 'Business Intelligence' },
     { value: 'communication', label: 'Communication' },
-    { value: 'planning', label: 'Planning' },
+    { value: 'contentGeneration', label: 'Content Generation' },
+    { value: 'creative', label: 'Creative' },
+    { value: 'customerService', label: 'Customer Service' },
+    { value: 'dataAnalytics', label: 'Data & Analytics' },
+    { value: 'development', label: 'Development' },
+    { value: 'environment', label: 'Environment' },
+    { value: 'finance', label: 'Finance' },
+    { value: 'imageProcessing', label: 'Image Processing' },
+    { value: 'language', label: 'Language' },
+    { value: 'marketing', label: 'Marketing' },
+    { value: 'other', label: 'Other' },
+    { value: 'productivity', label: 'Productivity' },
+    { value: 'research', label: 'Research' },
+    { value: 'socialMedia', label: 'Social Media' }
   ];
-
-  const uploadProps: UploadProps = {
-    name: 'file',
-    multiple: false,
-    action: '#',
-    onChange(info) {
-      if (info.file.status === 'done') {
-        message.success(`${info.file.name} file uploaded successfully`);
-      } else if (info.file.status === 'error') {
-        message.error(`${info.file.name} file upload failed.`);
-      }
-    },
+  
+  const handleAddSkill = () => {
+    const skillValue = form.getFieldValue('skillsCapabilities');
+    if (skillValue && skillValue.trim()) {
+      setSkills([...skills, skillValue.trim()]);
+      form.setFieldValue('skillsCapabilities', ''); // Clear the input after adding
+    }
   };
 
   const onFinish = (values: any) => {
-    console.log('Form values:', values);
+    const payload = {
+      "name": values.agentName,
+      "description": values.description,
+      "provider": values.providerOrganization,
+      "endpoint": values.endpointUrl,
+      "tags": selectedCategories,
+      "skills": skills,
+      "auth_type": values.documentationType,
+      "documentation": values.documentationURL,
+      "user_id": "ee59ab6e-796e-4912-9288-87c5e3cd6b03",
+      "is_public": values.agentType === 'public'
+    }
+    console.log('Form values:', payload);
     message.success('Agent submitted successfully!');
   };
 
@@ -91,7 +102,7 @@ const SubmitAgentPage: React.FC = () => {
                 requiredMark={false}
               >
                 <Row gutter={[24, 0]}>
-                  <Col span={24}>
+                  <Col span={12}>
                     <Form.Item
                       name="agentName"
                       label={<Text strong>Agent Name</Text>}
@@ -99,6 +110,18 @@ const SubmitAgentPage: React.FC = () => {
                     >
                       <Input 
                         placeholder="Enter your agent's name"
+                        style={{ borderRadius: '8px', height: '48px' }}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col span={12}>
+                    <Form.Item
+                      name="providerOrganization"
+                      label={<Text strong>Provider/Organization</Text>}
+                      rules={[{ required: true, message: 'Please enter provider/organization' }]}
+                    >
+                      <Input 
+                        placeholder="Enter provider/organization"
                         style={{ borderRadius: '8px', height: '48px' }}
                       />
                     </Form.Item>
@@ -133,35 +156,44 @@ const SubmitAgentPage: React.FC = () => {
                       />
                     </Form.Item>
                   </Col>
+                  <Col span={24}>
+                    <Form.Item
+                      name="agentType"
+                      rules={[
+                        { required: true, message: 'Please select a visibility' },
+                      ]}
+                    >
+                      <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}>
+                        <label style={{ fontWeight: '600', fontSize: '14px' }}>Agent Type</label>
+                      <Radio.Group>
+                        <Radio value="public">Public</Radio>
+                        <Radio value="private">Private</Radio>
+                      </Radio.Group>
+                      </div>
 
+                    </Form.Item>
+                  </Col>
                   <Col span={24}>
                     <Form.Item
                       name="categories"
                       label={<Text strong>Categories</Text>}
                       rules={[{ required: true, message: 'Please select at least one category' }]}
                     >
-                      <Checkbox.Group 
+                      <Checkbox.Group
                         value={selectedCategories}
                         onChange={handleCategoryChange}
                         style={{ width: '100%' }}
                       >
-                        <Row gutter={[16, 16]}>
+                        <Row gutter={[0, 12]}>
                           {categories.map((category) => (
-                            <Col xs={12} sm={8} md={6} key={category.value}>
-                              <Checkbox 
+                            <Col xs={24} sm={8} md={8} key={category.value}>
+                              <Checkbox
                                 value={category.value}
-                                style={{ 
-                                  padding: '8px 12px',
-                                  border: selectedCategories.includes(category.value) 
-                                    ? '2px solid #8b5cf6' 
-                                    : '1px solid #e2e8f0',
-                                  borderRadius: '8px',
-                                  background: selectedCategories.includes(category.value) 
-                                    ? '#f3f4f6' 
-                                    : 'white',
-                                  display: 'block',
-                                  textAlign: 'center',
-                                  transition: 'all 0.3s ease'
+                                style={{
+                                  display: 'flex',
+                                  alignItems: 'center',
+                                  fontSize: '14px',
+                                  fontWeight: 400,
                                 }}
                               >
                                 {category.label}
@@ -173,28 +205,68 @@ const SubmitAgentPage: React.FC = () => {
                     </Form.Item>
                   </Col>
 
-                  <Col xs={24} md={12}>
+
+                  <Col xs={24} md={21}>
+                    <Form.Item
+                      name="skillsCapabilities"
+                      label={<Text strong>Skills/Capabilities</Text>}
+                      rules={[{ required: !skills.length, message: 'Please enter skills/capabilities' }]}
+                    >
+                      <Input 
+                        placeholder="Enter skills/capabilities"
+                        style={{ borderRadius: '8px', height: '48px' }}
+                        onKeyUp={(e) => {
+                          if (e.key === 'Enter') {
+                            handleAddSkill();
+                          }
+                        }}
+                      />
+                    </Form.Item>
+                  </Col>
+                  <Col xs={24} md={3}>
+                  <Form.Item
+                      name="Skills/Capabilities"
+                      label={<Text strong></Text>}
+                    >
+                      <Button type="primary" onClick={() => handleAddSkill()} style={{ background: 'black', borderRadius: '8px', height: '48px' }}>
+                        +
+                      </Button>
+                    </Form.Item>
+                  </Col>
+                  {!!skills.length && <Col xs={24} md={24}>
+                    <Form.Item
+                      name="Skills/Capabilities"
+                    >
+                     <div style={{ display: 'flex', flexDirection: 'row', gap: '10px' }}> {skills.map((skill) => (
+                        <div style={{ padding: '10px', borderRadius: '20px', backgroundColor: '#f8fafc', width: 'auto, minWidth: 30px' }} key={skill}>{skill}</div>
+                      ))}
+                      </div>
+                    </Form.Item>
+                  </Col>}
+                  <Col span={24}>
                     <Form.Item
                       name="documentationType"
-                      label={<Text strong>Documentation Type</Text>}
+                      label={<Text strong>Authentication Type</Text>}
                     >
                       <Select 
                         placeholder="Select documentation type"
                         style={{ borderRadius: '8px' }}
                       >
-                        <Option value="api-docs">API Documentation</Option>
-                        <Option value="user-guide">User Guide</Option>
-                        <Option value="technical-specs">Technical Specifications</Option>
-                        <Option value="examples">Code Examples</Option>
-                        <Option value="video-tutorial">Video Tutorial</Option>
+                        <Option value="API Key">API Key</Option>
+                        <Option value="OAuth 2.0">OAuth 2.0</Option>
+                        <Option value="beaBearer Tokenrertoken">Bearer Token</Option>
+                        <Option value="Basic Auth">Basic Auth</Option>
                       </Select>
                     </Form.Item>
                   </Col>
-
-                  <Col xs={24} md={12}>
+                  <Col span={24}>
                     <Form.Item
-                      name="recommendationUrl"
-                      label={<Text strong>Recommendation URL</Text>}
+                      name="documentationURL"
+                      label={<Text strong>Documentation URL</Text>}
+                      rules={[
+                        { required: true, message: 'Please enter documentation URL' },
+                        { type: 'url', message: 'Please enter a valid URL' }
+                      ]}
                     >
                       <Input 
                         placeholder="https://your-documentation-url.com"
@@ -202,91 +274,20 @@ const SubmitAgentPage: React.FC = () => {
                       />
                     </Form.Item>
                   </Col>
-
                   <Col span={24}>
-                    <Form.Item
-                      name="contactEmail"
-                      label={<Text strong>Contact Email</Text>}
-                      rules={[
-                        { required: true, message: 'Please enter your contact email' },
-                        { type: 'email', message: 'Please enter a valid email' }
-                      ]}
-                    >
-                      <Input 
-                        placeholder="your-email@example.com"
-                        style={{ borderRadius: '8px', height: '48px' }}
-                      />
-                    </Form.Item>
-                  </Col>
-
-                  <Col span={24}>
-                    <Form.Item
-                      name="additionalFiles"
-                      label={<Text strong>Additional Files (Optional)</Text>}
-                    >
-                      <Upload {...uploadProps} style={{ width: '100%' }}>
-                        <Button 
-                          icon={<UploadOutlined />}
-                          style={{ 
-                            height: '48px',
-                            borderRadius: '8px',
-                            width: '100%',
-                            borderStyle: 'dashed'
-                          }}
-                        >
-                          Click to Upload Documentation or Examples
-                        </Button>
-                      </Upload>
-                    </Form.Item>
-                  </Col>
-
-                  <Col span={24}>
-                    <div 
-                      style={{ 
-                        background: '#f0f9ff',
-                        border: '1px solid #0ea5e9',
-                        borderRadius: '8px',
-                        padding: '16px',
-                        marginBottom: '24px'
-                      }}
-                    >
-                      <Space align="start">
-                        <InfoCircleOutlined style={{ color: '#0ea5e9', marginTop: '2px' }} />
-                        <div>
-                          <Text strong style={{ color: '#0369a1' }}>Submission Guidelines</Text>
-                          <div style={{ color: '#0369a1', marginTop: '4px' }}>
-                            <Text>• Ensure your agent endpoint is publicly accessible</Text><br />
-                            <Text>• Provide clear documentation for better discoverability</Text><br />
-                            <Text>• Test your agent thoroughly before submission</Text>
-                          </div>
-                        </div>
-                      </Space>
-                    </div>
-                  </Col>
-
-                  <Col span={24}>
-                    <div className="d-flex justify-content-between">
-                      <Button 
-                        size="large"
-                        style={{ 
-                          borderRadius: '8px',
-                          height: '48px',
-                          minWidth: '120px'
-                        }}
-                      >
-                        Save Draft
-                      </Button>
+                    <div className="d-flex justify-content-end">
                       <Button 
                         type="primary"
                         htmlType="submit"
                         size="large"
                         style={{ 
-                          background: 'linear-gradient(45deg, #8b5cf6, #6366f1)',
+                          background: 'linear-gradient(45deg, #212529, #6366f1)',
                           border: 'none',
                           borderRadius: '8px',
                           height: '48px',
                           minWidth: '120px',
-                          fontWeight: 600
+                          fontWeight: 600,
+                          alignSelf: 'right'
                         }}
                       >
                         Submit Agent
